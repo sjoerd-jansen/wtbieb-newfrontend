@@ -32,6 +32,7 @@ function FillTableUsers(tablePage, data)
                 <th>Profielfoto</th>
                 <th>Update</th>
                 <th>Verwijder</th>
+                <th>Leen boek uit</th>
              </tr>
 		</thead>
 		<tbody>`;
@@ -54,6 +55,7 @@ function FillTableUsers(tablePage, data)
                 <td><img src="${user.employeeAvatar}" width="75" height="75" alt="Profielfoto ${user.employeeName}"></td>
                 <td><button type="button" onclick='UpdateEmployeePopup(${employee})'>Update</button></td>
                 <td><button type="button" onclick='DeleteEmployee(${employee})'>Verwijder</button></td>
+                <td><button type="button" onclick='FetchNewLoanCopies(${user.employeeId})'>Leen uit</button></td>
             </tr>`;
 		}
 
@@ -232,21 +234,21 @@ function UpdateEmployeePopup(employee)
     let formHtml = `
                 <form class="">
                     <h1>${employee.employeeName} aanpassen</h1>
-					<p>${employee.employeeId}</p>
                     <label for="Naam"><b>Naam</b></label>
                     <input id="${changeEmployeeNameId}" class="employee-input" type="text" placeholder="Jan Piet" name="name">
-
+					</br>
                     <label  for="Email"><b>Email</b></label>
                     <input id="${changeEmployeeEmailId}" class="employee-input" type="text" placeholder="jp@wt.nl" name="email">
-                    
+                    </br>
                     <label for="Administrator"><b>Administrator</b></label>
                     <input id="${changeEmployeeAdminId}" class="employee-input" type="checkbox">
-
+					</br>
                     <label for="Profielfoto"><b>Profielfoto</b></label>
                     <input id="${changeEmployeeAvatarId}" class="employee-input" type="text" placeholder="wt.nl/profielfoto.jpg" name="avatar">
-                </form>
-                <button id="submitUpdateEmployee" type="button" onclick='SubmitUpdateUser(${employee.employeeId}, ${changeEmployeeNameId}, ${changeEmployeeEmailId}, ${changeEmployeeAdminId}, ${changeEmployeeAvatarId}, "change-employee-form")'>Pas aan</button>
-                <button id="closeUpdateEmployee" type="button" onclick='CloseEmployeePopup()'>Sluiten</button>`;
+					</br>
+					<button id="submitUpdateEmployee" type="button" onclick='SubmitUpdateUser(${employee.employeeId}, ${changeEmployeeNameId}, ${changeEmployeeEmailId}, ${changeEmployeeAdminId}, ${changeEmployeeAvatarId}, "change-employee-form")'>Pas aan</button>
+					<button id="closeUpdateEmployee" type="button" onclick='CloseEmployeePopup()'>Sluiten</button>
+                </form>`;
     
 	document.getElementById("change-employee-form").innerHTML = formHtml;
     document.getElementById("change-employee-form").style.display = "flex";
@@ -367,4 +369,194 @@ function SearchEmployee()
 
 	console.log(foundData);
 	FillTableUsers(0, foundData);
+}
+
+
+/*
+
+	THIS PART OF THE SCRIPT IS TO LOAN A 
+	BOOK TO AN EMPLOYEE WITHOUT THE EMPLOYEE
+	HAVING TO RESERVE THE BOOK FIRST
+
+*/
+
+// Find reserved users and fill table
+function FetchNewLoanCopies(employeeId)
+{
+	window.localStorage.setItem("loanEmployeeId", JSON.stringify(employeeId));
+
+    fetch(backendurl + "/book/findallcopies").then(response => {
+        return response.json();
+    }).then( copies => {
+		copies.sort((a, b) => parseFloat(a.copyId) - parseFloat(b.copyId) );
+        window.localStorage.setItem("newLoanData", JSON.stringify(copies));
+        FillLoanTable(0, "All");
+    })
+}
+
+// Fill table with reserved users
+function FillLoanTable(tablePage, input)
+{
+	let employeeId = window.localStorage.loanEmployeeId;
+	let data;
+
+	if (input === "Search")
+		data = JSON.parse(window.localStorage.newLoanSearchData);
+	else if (input === "All")
+			data = JSON.parse(window.localStorage.newLoanData);
+    let copiesInTable = 6;
+	
+    let userTableHtml =
+        `
+		<thead>
+			<tr>
+                <th>ID</th>
+                <th>Leen boek uit</th>
+             </tr>
+		</thead>
+		<tbody>`;
+		
+		let copyCount = 0;
+		let copyThresh = copiesInTable * tablePage; 
+
+    // Loop to access all rows 
+    for (let copy of data)
+	{
+		if (copyCount >= copyThresh && copyCount < copyThresh + copiesInTable)
+		{
+			let newCopy = JSON.stringify(copy)
+			userTableHtml += `<tr>
+           	    <td>${copy.copyId}</td>`
+			if (copy.copyAvailable)
+				userTableHtml += `<td><button type="button" onclick='LoanNewBook(${copy.copyId}, ${employeeId})'>Leen uit</button></td>`
+			else	
+				userTableHtml += `<td>Niet beschikbaar</td>`
+			userTableHtml += `</tr>`;
+		}
+
+		copyCount++;
+    }
+
+	userTableHtml += `<td><button type="button" onclick='ClosePopupEmployeeCopy()'>Sluiten</button></td><td></td>
+	</tbody>`
+	
+    let copyThreshMax = data.length < copyThresh + copiesInTable ? data.length : copyThresh + copiesInTable;
+
+	// Setting innerHTML of corresponding divs 
+    document.getElementById("newLoanCopies").innerHTML = userTableHtml;
+    document.getElementById("items-wrapper-admin-loan-copy").innerHTML = `Showing ${copyThresh + 1} to ${copyThreshMax} of ${data.length} copies`;
+	document.getElementById("select-new-loan-employee").style.display = "flex";
+
+    createTablePaginationEmployeeLoan(tablePage, copiesInTable, input);
+}
+
+function createTablePaginationEmployeeLoan(tablePage, itemsInTable, input)
+{
+
+	if (input === "Search")
+		data = JSON.parse(window.localStorage.newLoanSearchData);
+	else if (input === "All")
+			data = JSON.parse(window.localStorage.newLoanData);
+
+	let employeeId = window.localStorage.loanEmployeeId;
+    let pagesNeeded = parseInt(data.length / itemsInTable);
+    if (data.length % itemsInTable != 0)
+        pagesNeeded += 1;
+
+    // Calculate the mininum label number of the table. parseInt casts
+    // the division to an int: 4.0 until 4.9 = 4 for example.
+    let amountOfLabels = 5;
+    let minLabelNum = Math.max(0, parseInt(tablePage / amountOfLabels) * amountOfLabels); 
+    let prevButton = tablePage - 1;
+    let labelThresh = 5 + tablePage;
+       
+    // Cap the previous button to page 0 (indexing starts at 0).
+    if (prevButton < 0)
+        prevButton = 0;
+    let paginationHTML = `<label for="table_radio_3" onclick='FillLoanTable(${prevButton}, "${input}")'>&laquo; Previous </label>`;
+
+    if (amountOfLabels > pagesNeeded)
+        amountOfLabels = pagesNeeded;
+
+    let maxLabelNum = minLabelNum + amountOfLabels;
+    for (let labelCount = minLabelNum; labelCount < maxLabelNum; labelCount++) {
+            paginationHTML += `<label for="table_radio_${labelCount}" id="table_pager_${labelCount}" onclick='FillLoanTable(${labelCount}, "${input}")'>${labelCount + 1}</label>`;
+
+    }
+    
+    // Cap the next button to the max amount of pages.
+    let nextButton = tablePage + 1;
+    if (nextButton >= pagesNeeded)
+        nextButton = pagesNeeded - 1;
+    
+    paginationHTML += `<label for="table_radio_5" onclick='FillLoanTable(${nextButton}, "${input}")'>Next &raquo;</label>`;
+    
+    document.getElementById("pagination-loan-copy").innerHTML = paginationHTML;
+}
+
+function ClosePopupEmployeeCopy()
+{
+	document.getElementById("select-new-loan-employee").style.display = "none";
+}
+
+
+/*
+
+	THIS PART OF THE SCRIPT IS TO LOAN A 
+	BOOK TO AN EMPLOYEE WITHOUT THE EMPLOYEE
+	HAVING TO RESERVE THE BOOK FIRST
+
+*/
+
+async function LoanNewBook(copyId, employeeId)
+{
+	let response = await fetch(backendurl + "/book/loan/new/" + copyId + "/" + employeeId, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+	.catch(error => {
+		alert('Er is iets fouts gegaan');
+	});
+
+	ClosePopupEmployeeCopy();
+	let str = await response.json();
+	alert(str.response);
+	FetchReservedBooks();
+	FetchLoanedBooks();
+}
+
+/*
+
+	THIS PART OF THE SCRIPT IS TO SEARCH
+	A BOOK COPY BASED ON THE COPY ID
+
+*/
+
+function SearchCopyId()
+{
+	let input = document.getElementById("searchCopy").value.toLowerCase();
+    let data = JSON.parse(window.localStorage.newLoanData);
+
+	let foundData=[];
+
+	for (let copy of data)
+	{
+		if (copy.copyId.toLowerCase().includes(input))
+		{
+			foundData.push(copy);
+		}
+	}
+
+	window.localStorage.setItem("newLoanSearchData", JSON.stringify(foundData));
+
+	let search = "";
+
+	if (input === "")
+		search = "All";
+	else
+		search = "Search";
+
+	FillLoanTable(0, search);
 }

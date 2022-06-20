@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
-		<script src="../js/env.js"></script>
+		<script type="text/javascript" src="../js/env.js"></script>
     </head>
     <title></title>
 
@@ -230,6 +230,22 @@
 					<button type="button" class="btn cancel" onclick="">Cancel</button>
 					</form>
 			</div>
+
+			<!-- Popup to select a book to loan to employee -->
+			<div class="form-popup choose-copy-button" id="select-new-loan-employee">
+				<div class="table-concept book-list-div">
+					<input class="table-radio" type="radio" name="table_radio" id="table_radio_0" checked="checked"/>
+					<div class="table-display">
+						<!-- Search form -->
+						<form class="search-form">
+							<input type="text" id="searchCopy" class="search-book" placeholder="Zoek: Exemplaar ID" oninput="SearchCopyId()"> <!-- Function in adminUserlist.js -->
+						</form>
+						<div id="items-wrapper-admin-loan-copy"></div>
+					</div>
+					<table id="newLoanCopies"></table>
+					<div class="pagination" id="pagination-loan-copy"></div>
+				</div>
+			</div>
       	</div>
 
         
@@ -259,7 +275,7 @@
             border-radius: 10px;
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
-            width: 300px;
+
             z-index: 9;
         }
 
