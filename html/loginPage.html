@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Login page</title>
+    <script src="../js/env.js"></script>
+</head>
+<body>
+    <div id="loginHeader">
+        <h1 id="login">Working Talent Bibliotheek</h1> 
+    </div>
+    <div class="flex-container">
+            <form id= 'loginForm' class="flex-child form">
+                <div id="loginDiv">
+                <label>Email</label>
+                <input type="text" name="email" id="email" />
+                
+                <label>Wachtwoord</label>
+                <input type="password"  name="password" id="password" />
+                <div><input type="checkbox" style='margin-top: 5px;' onclick="togglePasswordVisibility()"> Laat wachtwoord zien</div>
+
+            	<button type="button" style='margin-top: 5px;'onclick="LogIn()">Log in</button>
+
+                <script src="../js/loginPage.js"></script>
+            </form>
+        </div>
+        <div class="flex-child image">
+            <img src="../images/books.jpg">
+        </div>
+        <div class="footer">
+            
+            <div class="footer_img_div">
+            <img class="footer_img" src="../images/wt_logo_zwarte_achtergrond.PNG"/>
+            </div>
+        
+      </div>
+</body>
+</html>
+
+

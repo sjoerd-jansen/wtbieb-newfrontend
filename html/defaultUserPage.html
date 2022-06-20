@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="../css/styles.css">
+      <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+      <script src="../js/env.js"></script>
+  </head>
+  <body>
+    <!-- Header with the logout button and tab buttons -->
+    <div class="header">
+          <div class="subitem-header">
+            <button class="tablink-primary header-button" onclick="openPage('Overzicht', this, 'grey')">
+                Overzicht
+            </button>
+          </div>
+
+          <div class="subitem-header">
+                <button class="tablink header-button" onclick="openPage('Boekenlijst', this, 'grey')">
+                    Boekenlijst
+                </button>
+          </div>
+
+          <div class="subitem-header">
+                <button class="tablink header-button" onclick="openPage('Medewerkers', this, 'grey')">
+                    Medewerkers
+                </button>
+          </div>
+            
+          <div class="button-container-header">
+                <button type="button" class="logout-button">
+                    Uitloggen
+                </button>
+          </div>
+    </div>
+
+    <div id="MijnOverzicht" class="tabcontent overview-div-header" style="border-bottom: none;">
+        <div id="overview-container">
+          <div id="owned-books-div" style="border: 1px solid #00e600;">
+            <h1 class="user_info">Naam medewerker:</h1> <button type="button" class="btn-warning btn-sm">Aanpassen</button>
+            <h2 class="user_info">Email medewerker:</h2> <button type="button" class="btn-warning btn-sm">Aanpassen</button>
+            <div id="deleteUserBtnDiv"><button type="button" class="btn btn-danger" id="deleteUserBtn">Delete medewerker</button> </div>
+
+          </div>
+          <div id="reserved-books-div">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">Boeken in Bezit</button>
+            <div class="collapse" id="collapseExample2">
+                <div class="table-concept">
+                    <form class="search-form-overview">
+                    <input type="text" class="search-book" placeholder="Zoeken: auteur, ISBN ...">
+                    </form>
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Titel</th>
+                        <th>Auteur</th>
+                        <th>ISBN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td> </td>
+                        <td>Bidden voor overlord Jorrit: de basics</td>
+                        <td>Nederige onderdaan</td>
+                        <td>666</td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td>Bidden voor overlord Jorrit: de basics</td>
+                        <td>Nederige onderdaan</td>
+                        <td>666</td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td>Bidden voor overlord Jorrit: de basics</td>
+                        <td>Nederige onderdaan</td>
+                        <td>666</td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td>Bidden voor overlord Jorrit: de basics</td>
+                        <td>Nederige onderdaan</td>
+                        <td>666</td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td>Bidden voor overlord Jorrit: de basics</td>
+                        <td>Nederige onderdaan</td>
+                        <td>666</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">Gereserveerde Boeken</button>
+            <div class="collapse" id="collapseExample3">
+
+            <div class="table-concept">
+              <form class="search-form-overview">
+                <input type="text" class="search-book" placeholder="Zoeken: auteur, ISBN ...">
+              </form>
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Titel</th>
+                    <th>Auteur</th>
+                    <th>ISBN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>Nederige onderdaan</td>
+                    <td>666</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>Nederige onderdaan</td>
+                    <td>666</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>Nederige onderdaan</td>
+                    <td>666</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>Nederige onderdaan</td>
+                    <td>666</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>Nederige onderdaan</td>
+                    <td>666</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+          </div>
+          <div id="rented-history-div">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">Historie</button>
+            <div class="collapse" id="collapseExample4">
+
+            <div class="table-concept">
+              <form class="search-form-overview">
+                <input type="text" class="search-book" placeholder="Zoeken: auteur, ISBN ...">
+              </form>
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Titel</th>
+                    <th>Uitleendatum</th>
+                    <th>Teruggeef-datum</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>10/12/12</td>
+                    <td>11/12/12</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>3/6/1999</td>
+                    <td>3/6/2012</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>10/12/1999</td>
+                    <td>10/12/2000</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>3/6/1999</td>
+                    <td>3/6/2012</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Bidden voor overlord Jorrit: de basics</td>
+                    <td>3/6/1999</td>
+                    <td>3/6/2012</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+          </div>
+        </div>
+        
+    </div>
+    <footer class="footer">
+            
+    <div class="footer_img_div">
+    <img class="footer_img" src="../images/wt_logo_zwarte_achtergrond.PNG"/>
+    </footer>
+
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="../js/defaultUserPage.js"></script>
+</html> 

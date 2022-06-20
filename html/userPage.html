@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="../css/styles.css">
+      <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+      <script src="../js/env.js"></script>
+  	</head>
+  	<body>
+    	<div class="header">
+
+        	<div class="subitem-header">
+          		<button class="tablink-primary header-button" onclick="openPage('MijnOverzicht', this, 'grey')">
+            		Overzicht
+        		</button>
+        	</div>
+        
+       	 	<div class="subitem-header">
+          		<button class="tablink header-button" onclick="openPage('Boekenlijst', this, 'grey')">
+            	Boekenlijst
+        		</button>
+        	</div>
+        
+			<div class="subitem-header">
+				<button class="tablink header-button" onclick="openPage('Profiel', this, 'grey')">
+				Mijn profiel
+				</button>
+			</div>
+        
+        	<div class="button-container-header" style="float: right;">
+            	<button type="button" class="logout-button" onclick="LogOff()" style="float: right;">
+                Uitloggen
+            	</button>
+        	</div>
+    	</div>
+		<!-- Book list shown to user -->
+    	<div id="Boekenlijst" class="tabcontent" style="display: none">
+        	<div id="book-list-div" class="body-container tabcontent">
+            	<div class="table-concept">
+              		<div class="table-display">
+						<!-- Search bar -->
+                  		<form class="search-form">
+                      		<input type="text" id="userSearchBook" class="search-book" placeholder="Zoeken: auteur, ISBN ..." oninput="UserSearchBook()">
+                  		</form>
+						<input class="table-radio" type="radio" name="table_radio" class="table_radio_0" checked="checked"/>
+						<div id="items-wrapper-userbooks"></div>
+              		</div>
+              		<!-- Book table -->
+					<table id="userBooks"></table>
+              		<div class="pagination" id="pagination-userbooks"></div>
+            	</div>
+          	</div>
+  		</div>
+  
+  		<div id="MijnOverzicht" class="tabcontent">
+        	<div id="overview-container">
+				<!-- Loaned -->
+          		<div id="owned-books-div">
+            		<h1 class="overview-div-header">Boeken In Bezit</h1>
+            		<div class="table-concept">
+						<div class="table-display">
+							<!-- Search bar -->
+							<form class="search-form">
+								<input type="text" id="userSearchLoan" class="search-book" placeholder="Zoeken: titel, auteur ..." oninput="UserSearchOverview('userSearchLoan')">
+							</form>
+							<input class="table-radio" type="radio" name="table_radio" class="table_radio_0" checked="checked"/>
+							<div id="items-wrapper-userloans"></div>
+						</div>
+						<!-- Owned books table -->
+              			<table id="userLoans"></table>
+						<div class="pagination" id="pagination-userloans"></div>
+            		</div>
+          		</div>
+				<!-- Reserved -->
+          		<div id="reserved-books-div">
+            		<h1 class="overview-div-header">Gereserveerde Boeken</h1>
+            		<div class="table-concept">
+						<div class="table-display">
+							<!-- Search bar -->
+							<form class="search-form">
+								<input type="text" id="userSearchReserve" class="search-book" placeholder="Zoeken: titel, auteur ..." oninput="UserSearchOverview('userSearchReserve')">
+							</form>
+							<input class="table-radio" type="radio" name="table_radio" class="table_radio_0" checked="checked"/>
+							<div id="items-wrapper-userreserve"></div>
+						</div>
+						  <!-- Reserved books table -->
+              			<table id="userReserved"></table>
+						  <div class="pagination" id="pagination-userreserve"></div>
+            		</div>
+          		</div>
+				<!-- History -->
+          		<div id="rented-history-div">
+            		<h1 class="overview-div-header">Historie</h1>
+            		<div class="table-concept">
+						<div class="table-display">
+							<!-- Search bar -->
+							<form class="search-form">
+								<input type="text" id="userSearchHistory" class="search-book" placeholder="Zoeken: titel, auteur ..." oninput="UserSearchOverview('userSearchHistory')">
+							</form>
+							<input class="table-radio" type="radio" name="table_radio" class="table_radio_0" checked="checked"/>
+							<div id="items-wrapper-userhistory"></div>
+						</div>
+						<!-- History table -->
+              			<table id="userHistory"></table>
+						  <div class="pagination" id="pagination-userhistory"></div>
+            		</div>
+          		</div>
+        	</div>
+  		</div>
+		<!-- My profile -->
+    	<div id="Profiel" class="tabcontent" style="display: none">
+        	<div id="overview-container">
+				<!-- Table with all book loan requests -->
+           		<div id="user-profile-view">
+           			<h1 class="overview-div-header">Profiel</h1>
+           			<h2 id="userName">Naam</h2>
+					<h3 id="userEmail">Email</h3>
+					<img id="userAvatar" src="" alt="Profielfoto" width="300" height="300">
+           		</div>
+				<!-- Table with all books currently loaned -->
+           		<div id="user-profile-update">
+           			<h1 class="overview-div-header">Updaten</h1>
+					<p><h3>Wachtwoord</h3>
+						<input type="text" id="passwordUpdate" placeholder="Wachtwoord"></p>
+					</br>
+					<p><h3>Email</h3>
+						<input type="text" id="emailUpdate" placeholder="Email"></p>
+					</br>
+					<p><h3>Profielfoto</h3>
+						<input type="text" id="avatarUpdate" placeholder="Foto url"></p>
+					</br>
+					<p><h3>Huidig wachtwoord</h3>
+						<input type="text" id="currentPassword" placeholder="Huidig wachtwoord"></p>
+					</br>
+					<p><button type="button" onclick="UpdateUser()">Update</button></p>
+            	</div>
+        	</div>
+  		</div>
+  		<div class="footer">
+        	<div class="footer_img_div">
+    			<img class="footer_img" src="../images/wt_logo_zwarte_achtergrond.PNG"/>
+    		</div>
+		</div>
+  	</body>
+  	<script src="../js/userOverview.js"></script>
+  	<script src="../js/userBooklist.js"></script>
+  	<script src="../js/userProfile.js"></script>
+</html> 

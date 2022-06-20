@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+		<script src="../js/env.js"></script>
+    </head>
+    <title></title>
+
+    <body>
+        <div id="screenmask" onclick="hideMenus()" style="position:fixed; width: 100%; height: 100%; top: 0px; right: 0px; display: none; z-index: 8;"></div>
+        <!-- Header with the logout button and tab buttons -->
+        <div class="header">
+        	<div class="subitem-header">
+           		<button class="tablink-primary header-button" onclick="openPage('Overzicht', this, 'grey')">
+               	Overzicht
+           		</button>
+        	</div>
+
+        	<div class="subitem-header">
+               	<button class="tablink header-button" onclick="openPage('Boekenlijst', this, 'grey')">
+                Boekenlijst
+               	</button>
+        	</div>
+
+          	<div class="subitem-header">
+               	<button class="tablink header-button" onclick="openPage('Medewerkers', this, 'grey')">
+                Medewerkers
+               	</button>
+          	</div>
+            
+          	<div class="button-container-header">
+               	<button type="button" class="logout-button" onclick="LogOff()">
+                Uitloggen
+              	</button>
+          	</div>
+        </div>
+
+        <div id="Overzicht" class="tabcontent">
+          
+        	<div id="overview-container">
+				<!-- Table with all book loan requests -->
+           		<div id="owned-books-admin-div">
+           			<h1 class="overview-div-header">Leen verzoeken</h1>
+           			<div class="table-concept">
+						<div class="table-display">
+							<!-- Search bar -->
+							<form class="search-form">
+								<input type="text" id="reservedBooks" class="search-book" placeholder="Zoeken: titel, medewerker ..." oninput="SearchOverview('reservedBooks')"> <!-- Function in adminOverview.js -->
+							</form>
+							<input class="table-radio" type="radio" name="table_radio" id="table_radio_0" checked="checked"/>
+							<div id="items-wrapper-reserved"></div>
+           				</div>
+               			<table id="adminOverviewReserved"></table>
+						<div class="pagination" id="pagination-reserved"></div>
+           			</div>
+           		</div>
+				<!-- Table with all books currently loaned -->
+           		<div id="reserved-books-admin-div">
+           			<h1 class="overview-div-header">Uitgeleende Boeken</h1>
+           			<div class="table-concept">
+						<div class="table-display">
+							<!-- Search bar loaned -->
+							<form class="search-form">
+								<input type="text" id="loanedBooks" class="search-book" placeholder="Zoeken: exemplaar ID, titel ..." oninput="SearchOverview('loanedBooks')"> <!-- Function in adminOverview.js -->
+							</form>
+							<input class="table-radio" type="radio" name="table_radio" id="table_radio_0" checked="checked"/>
+							<div id="items-wrapper-loaned"></div>
+           				</div>
+               			<table id="adminOverviewLoaned"></table>
+						<div class="pagination" id="pagination-loaned"></div>
+            		</div>
+            	</div>
+				<!-- Popup to select which book copy to loan -->
+				<div class="form-popup change-book-button" id="select-book-copy-loan">
+					<form class="">
+					<h1>Exemplaar</h1>
+					</br>
+					<table id="availableCopies"></table>
+					</br>
+					<button type="button" onclick="CloseSelectCopyPopup()">Sluiten</button>
+					</form>
+				</div>
+        	</div>
+        </div>
+        
+		<!-- THIS IS WHERE THE BOOK TAB STARTS -->
+        <div id="Boekenlijst" class="tabcontent" style="display: none;">
+        	<div id="new-book-button-div">
+           		<!-- <button class="new-book-button" id="new-book-button-top">Boek toevoegen</button> -->
+				<button class="new-book-button" id="new-book-button-top" onclick="openBookForm('new-book-form', 'new-book-button-top', 'Sluiten', 'Boek toevoegen')">
+				Boek toevoegen</button>
+            
+           		<div class="form-popup new-book-button" id="new-book-form">
+               		<form class="">
+                   		<h1>Boek toevoegen</h1>
+
+						<label for="id"><b>ID</b></label>
+                   		<input class="book-input" type="text" placeholder="123456789" name="book-id">
+
+                   		<label for="Titel"><b>Titel</b></label>
+                   		<input id="bookTitle" class="book-input" type="text" placeholder="The lord of the Rings" name="titel" required>
+
+                   		<label  for="Auteur"><b>Auteur</b></label>
+                   		<input id="bookAuthor" class="book-input" type="text" placeholder="J.R.R. Tolkien" name="auteur" required>
+
+                   		<label for="ISBN"><b>ISBN</b></label>
+                   		<input id="bookIsbn" class="book-input" type="text" placeholder="J.R.R. Tolkien" name="isbn" required>
+
+               			<label for="Tags"><b>Tags</b></label>
+                  		<input id="bookTags" class="book-input" type="text" placeholder="Horror, familie" name="tags" required>
+
+                   		<label for="Hoeveelheid"><b>Hoeveelheid</b></label>
+                   		<input id="bookAmount" class="book-input" type="number" placeholder="10" name="hoeveelheid" required>
+
+
+                   		<button type="button" class="btn cancel" onclick="createBook('new-book-form')">Voeg toe</button>
+               		</form>
+           		</div>
+       		</div>
+
+			<div class="form-popup change-book-button" id="change-book-form">
+				<form class="">
+					<h1>Boek aanpassen</h1>
+
+					<label for="id"><b>ID</b></label>
+					<input class="book-input" type="text" placeholder="123456789" name="book-id" required>
+
+					<label for="Titel"><b>Titel</b></label>
+					<input id="bookTitle" class="book-input" type="text" placeholder="The lord of the Rings" name="titel" required>
+
+					<label  for="Auteur"><b>Auteur</b></label>
+					<input id="bookAuthor" class="book-input" type="text" placeholder="J.R.R. Tolkien" name="auteur" required>
+
+					<label for="Auteur"><b>ISBN</b></label>
+					<input id="bookIsbn" class="book-input" type="text" placeholder="J.R.R. Tolkien" name="isbn" required>
+				
+					<label for="Tags"><b>Tags</b></label>
+					<input id="bookTags" class="book-input" type="text" placeholder="Horror, Drama" name="isbn" required>
+
+					<label for="Hoeveelheid"><b>Hoeveelheid</b></label>
+					<input id="bookAmount" class="book-input" type="number" placeholder="10" name="hoeveelheid" required>
+
+					<button type="button" class="btn cancel" onclick="createBook()">Voeg toe</button>
+				</form>
+			</div>
+
+			<div class="form-popup delete-book-button" id="delete-book-form">
+				<form class="">
+				<h1>Boek verwijderen</h1>
+
+				<label for="id"><b>ID</b></label>
+				<input class="book-input" type="text" placeholder="123456789" name="book-id" required>
+				<button type="button" class="btn cancel" onclick="deleteBook()">Verwijder</button>
+				<button type="button" class="btn cancel" onclick="">Cancel</button>
+				</form>
+			</div>
+
+			<!-- THIS IS WHERE THE BOOK TABLE STARTS -->
+			<div id="book-list-div" class="body-container ">
+				<div class="table-concept book-list-div">
+					<input class="table-radio" type="radio" name="table_radio" id="table_radio_0" checked="checked"/>
+					<div class="table-display">
+						<!-- Search form -->
+						<form class="search-form">
+							<input type="text" id="searchBooks" class="search-book" placeholder="Zoeken: auteur, ISBN ..." oninput="SearchBooks()"> <!-- Function in adminBooklist.js -->
+						</form>
+						<div id="items-wrapper"></div>
+					</div>
+
+					<table id="book-table" class="book-table"></table>
+					<div class="pagination" id="pagination-booklist"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- THIS IS WHERE THE EMPLOYEE TAB STARTS -->
+       	<div id="Medewerkers" class="tabcontent" style="display: none;">
+       		<div id="new-book-button-div">
+				<!-- New employee button -->
+           		<button class="new-book-button" id="new-book-button-top" onclick="NewEmployeePopup()">Medewerker toevoegen</button>
+       		</div>
+       		<div id="book-list-div" class="body-container ">
+           		<div class="table-concept book-list-div">
+           			<input class="table-radio" type="radio" name="table_radio" id="table_radio_0" checked="checked"/>
+           			<div class="table-display">
+						<!-- Search form -->
+               			<form class="search-form">
+                   			<input type="text" id="searchEmployee" class="search-book" placeholder="Zoeken op naam" oninput="SearchEmployee()"> <!-- Function in adminUserlist.js -->
+               			</form>
+			  			<div id="items-wrapper-admin-employees"></div>
+           			</div>
+           			<table id="adminEmployeeTable"></table>
+           			<div class="pagination" id="pagination-users"></div>
+          		</div>
+       		</div>
+
+			<div class="form-popup change-employee-button" id="change-employee-form">
+				<form class="">
+					<h1>Medewerker aanpassen</h1>
+
+					<label for="id"><b>ID</b></label>
+					<p id="employeeIdText"></p>
+
+					<label for="Naam"><b>Naam</b></label>
+					<input id="employeeNameUpdate" class="book-input" type="text" placeholder="The lord of the Rings" name="titel" required>
+
+					<label  for="Email"><b>Email</b></label>
+					<input id="employeeEmailUpdate" class="book-input" type="text" placeholder="J.R.R. Tolkien" name="auteur" required>
+
+					<label for="Wachtwoord"><b>Wachtwoord</b></label>
+					<input id="employeePasswordUpdate" class="book-input" type="text" placeholder="J.R.R. Tolkien" name="isbn" required>
+				
+					<label for="Administrator"><b>Is Administrator</b></label>
+					<input id="employeeAdminUpdate" class="book-input" type="text" placeholder="Horror, Drama" name="isbn" required>
+
+					<button type="button" class="btn cancel" onclick="createBook()">Voeg toe</button>
+					<button type="button" onclick="CloseUpdateEmployeePopup()">Sluiten</button>
+				</form>
+			</div>
+
+			<div class="form-popup delete-employee-button" id="delete-employee-form">
+				<form class="">
+					<h1>Boek verwijderen</h1>
+
+					<label for="id"><b>ID</b></label>
+					<input class="book-input" type="text" placeholder="123456789" name="book-id" required>
+					<button type="button" class="btn cancel" onclick="SubmitDeleteEmployee()">Verwijder</button>
+					<button type="button" class="btn cancel" onclick="">Cancel</button>
+					</form>
+			</div>
+      	</div>
+
+        
+
+        <div class="footer">
+        	<div class="footer_img_div">
+            	<img class="footer_img" src="../images/wt_logo_zwarte_achtergrond.PNG"/>
+            </div>
+        </div>
+    </body>
+
+    <script type="text/javascript" src="../js/adminBooklist.js"></script>
+    <script type="text/javascript" src="../js/adminOverview.js"></script>
+    <script type="text/javascript" src="../js/adminUserlist.js"></script>
+
+    <style>
+        .form-popup {
+            top: 50%;
+            left: 50%;
+            display: none;
+            position: fixed;
+            background-color: white;
+            border-right: solid black 3px;
+            border-left: solid black 1px;
+            border-top: solid black 1px;
+            border-bottom: solid black 3px;
+            border-radius: 10px;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 300px;
+            z-index: 9;
+        }
+
+        .book-input {
+            display: block;
+        }
+    </style>
+</html> 

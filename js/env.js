@@ -1,0 +1,1 @@
+const backendurl = "https://workingtalentbieb.azurewebsites.net"
