@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bugreport</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/env.js"></script>
+    <style>
+        .bug-report-form {
+            display: block;
+            width: 15%;
+            margin:auto;
+            padding: auto;
+        }
+
+        .blob {
+            line-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+
+        <div class="subitem-header">
+          <button class="tablink-primary header-button" onclick="openPage('MijnOverzicht', this, 'grey')">
+            Overzicht
+        </button>
+        </div>
+        
+        <div class="subitem-header">
+          <button class="tablink header-button" onclick="openPage('Boekenlijst', this, 'grey')">
+            Boekenlijst
+        </button>
+        </div>
+        
+        <div class="button-container-header" style="float: right;">
+            <button type="button" onclick="LogOff()" class="logout-button" style="float: right;">
+                Uitloggen
+            </button>
+        </div>
+    </div>
+
+    <div class="bug-report-form">
+    <form class="blob">
+        <h1>Bug report</h1>
+        <label><b>Titel</b></label>
+        <input id="bug-report-title" class="book-input" type="text" placeholder="Probleem" name="titel">
+
+        <label><b>Beschrijving</b></label>
+        <textarea id="bug-report-description" rows="5" cols="35" placeholder="Beschrijving"></textarea>
+
+        <label><b>Email</b></label>
+        <input id="bug-report-email" class="book-input" type="email" placeholder="gebruiker@domein.nl" name="isbn">
+    </form>
+    <button onclick="sendBugReport()">Versturen</button>
+    </div>
+
+    <script src="../js/bugReport.js"></script>
+</body>
+</html>
