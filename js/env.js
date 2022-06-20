@@ -1,1 +1,1 @@
-const backendurl = "https://workingtalentbieb.azurewebsites.net"
+const backendurl = "https://wtbiebbackendnew.azurewebsites.net"
