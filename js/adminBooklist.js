@@ -306,9 +306,10 @@ function updateBook(book) {
                     
                     <label for="Tags"><b>Tags</b></label>
                     <input id="${changeBookTagsId}" class="book-input" type="text" placeholder="J.R.R. Tolkien" name="isbn">
-                </form>
-                <button id="submitUpdate" type="button" onclick='submitUpdateBook(${book.bookId}, ${changeBookTitleId}, ${changeBookAuthorId}, ${changeBookIsbnId}, ${changeBookTagsId}, "change-book-form")'>Pas aan
-`;
+					<button id="submitUpdate" type="button" onclick='submitUpdateBook(${book.bookId}, ${changeBookTitleId}, ${changeBookAuthorId}, ${changeBookIsbnId}, ${changeBookTagsId}, "change-book-form")'>Pas aan</button>
+					<button id="submitUpdate" type="button" onclick='closeForm("change-book-form")'>Sluiten</button>
+				</form>`;
+                
     document.getElementById("change-book-form").innerHTML = formHtml;
     document.getElementById("change-book-form").style.display = "flex";
     document.getElementById(changeBookTitleId).value = book.bookTitle;
@@ -370,11 +371,10 @@ async function deleteBook(book) {
                     <form class="">
                         <h1>${book.bookTitle} verwijderen?</h1>
                         ${copyCheckboxes}
-
-                    </form>
-                    <button id="submitDelete" type="button" onclick='submitDeleteBook(${book.bookId}, "delete-book-form", ${wrappedCopyIds}, "deleteCheckbox")'>Ja
-                    <button id="" type="button" onclick='closeForm("delete-book-form")'>Nee
-    `;
+						</br>
+						<button id="submitDelete" type="button" onclick='submitDeleteBook(${book.bookId}, "delete-book-form", ${wrappedCopyIds}, "deleteCheckbox")'>Ja</button>
+						<button id="" type="button" onclick='closeForm("delete-book-form")'>Nee</button>
+                    </form>`;
     openScreenmask();
     document.getElementById("delete-book-form").innerHTML = formHtml;
     document.getElementById("delete-book-form").style.display = "flex";
