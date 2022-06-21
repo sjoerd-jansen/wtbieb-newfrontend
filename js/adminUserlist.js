@@ -33,6 +33,7 @@ function FillTableUsers(tablePage, data)
                 <th>Update</th>
                 <th>Verwijder</th>
                 <th>Leen boek uit</th>
+                <th>Vraag boek retour</th>
              </tr>
 		</thead>
 		<tbody>`;
@@ -56,6 +57,7 @@ function FillTableUsers(tablePage, data)
                 <td><button type="button" onclick='UpdateEmployeePopup(${employee})'>Update</button></td>
                 <td><button type="button" onclick='DeleteEmployee(${employee})'>Verwijder</button></td>
                 <td><button type="button" onclick='FetchNewLoanCopies(${user.employeeId})'>Leen uit</button></td>
+                <td><button type="button" onclick='ReturnBookCopy(${user.employeeId})'>Retour aanvraag</button></td>
             </tr>`;
 		}
 
@@ -216,6 +218,36 @@ async function UpdateUser(employeeId, employee)
 	alert(str.response);
 	FetchUsers();
 }
+
+async function CreateReturnMail(divTohideId, loanedBooks) {
+    // loanedBooks = JSON.parse(loanedBooks);
+    if (loanedBooks.length == 0)
+        return;
+
+    let container = document.querySelector(`#${divTohideId}`);
+    let checkboxes = container.querySelectorAll(`input[type="checkbox"]:checked`); 
+    console.log(checkboxes);
+    let checkedBooks = [];
+    for (let checkbox of checkboxes) {
+        checkedBooks.push(loanedBooks[checkbox.id]);
+    }
+    
+    for (let book of checkedBooks) {
+        fetch(backendurl + `/returnemail/${book.copyId.split(".")[0]}/${book.employeeId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then( response => {
+            alert("Verzonden");
+        })
+        .catch(error => {
+            alert('Er is iets fouts gegaan');
+        });
+    }
+    document.getElementById(divTohideId).style.display = "none";
+}
 	
 // Close popup
 function CloseEmployeePopup()
@@ -231,8 +263,7 @@ function UpdateEmployeePopup(employee)
     let changeEmployeeAdminId = "changeAdminId";
     let changeEmployeeAvatarId = "changeAvatarId";
 
-    let formHtml = `
-                <form class="">
+    let formHtml = `<form class="">
                     <h1>${employee.employeeName} aanpassen</h1>
                     <label for="Naam"><b>Naam</b></label>
                     <input id="${changeEmployeeNameId}" class="employee-input" type="text" placeholder="Jan Piet" name="name">
@@ -403,7 +434,7 @@ function FillLoanTable(tablePage, input)
 	if (input === "Search")
 		data = JSON.parse(window.localStorage.newLoanSearchData);
 	else if (input === "All")
-			data = JSON.parse(window.localStorage.newLoanData);
+        data = JSON.parse(window.localStorage.newLoanData);
     let copiesInTable = 6;
 	
     let userTableHtml =
@@ -559,4 +590,38 @@ function SearchCopyId()
 		search = "Search";
 
 	FillLoanTable(0, search);
+}
+
+function ReturnBookCopy(employeeId)
+{
+    let loanedBooks = [];
+    for (let loanedBook of JSON.parse(localStorage.loanedData)) {
+        if (loanedBook.employeeId == employeeId) {
+            loanedBooks.push(loanedBook);
+            console.log(Object.keys(loanedBook) + loanedBook.dateLent);
+        }
+    }
+
+    let formHtml = ``
+    if (loanedBooks.length > 0)
+        formHtml += `<h1>Retour aanvragen ${loanedBooks[0].employeeName}</h1>`;
+    else
+        formHtml += `<h1>Retour aanvragen</h1>`;
+
+	formHtml += `<form class="popup">`
+    console.log(loanedBooks);
+    
+    let count = 0;
+    for (let loanedBook of loanedBooks) {
+         formHtml += `<input id="${count}" class="employee-input" type="checkbox" placeholder="jp@wt.nl" name="email"/>
+                      <label style="width: 80%" for="Email"><b>${loanedBook.bookTitle}</b></label>
+                      <label for="Date lent"><b>${loanedBook.dateLent}</b></label><br>`
+        count += 1;
+    }
+    formHtml += `</form>
+                <button id="submitReturnCopies" type="button" onclick='CreateReturnMail("change-employee-form", ${JSON.stringify(loanedBooks)})'>Verstuur</button>
+                <button id="closeNewEmployee" type="button" onclick='CloseEmployeePopup()'>Sluiten</button>`;
+    
+	document.getElementById("change-employee-form").innerHTML = formHtml;
+    document.getElementById("change-employee-form").style.display = "flex";
 }
