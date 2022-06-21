@@ -226,7 +226,6 @@ async function CreateReturnMail(divTohideId, loanedBooks) {
 
     let container = document.querySelector(`#${divTohideId}`);
     let checkboxes = container.querySelectorAll(`input[type="checkbox"]:checked`); 
-    console.log(checkboxes);
     let checkedBooks = [];
     for (let checkbox of checkboxes) {
         checkedBooks.push(loanedBooks[checkbox.id]);
@@ -240,7 +239,10 @@ async function CreateReturnMail(divTohideId, loanedBooks) {
             }
         })
         .then( response => {
-            alert("Verzonden");
+            return response.json();
+        })
+        .then(data => {
+            alert(data.response);
         })
         .catch(error => {
             alert('Er is iets fouts gegaan');
@@ -598,7 +600,6 @@ function ReturnBookCopy(employeeId)
     for (let loanedBook of JSON.parse(localStorage.loanedData)) {
         if (loanedBook.employeeId == employeeId) {
             loanedBooks.push(loanedBook);
-            console.log(Object.keys(loanedBook) + loanedBook.dateLent);
         }
     }
 
@@ -609,7 +610,6 @@ function ReturnBookCopy(employeeId)
         formHtml += `<h1>Retour aanvragen</h1>`;
 
 	formHtml += `<form class="popup">`
-    console.log(loanedBooks);
     
     let count = 0;
     for (let loanedBook of loanedBooks) {
