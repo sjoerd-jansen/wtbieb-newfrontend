@@ -246,6 +246,7 @@ async function CreateReturnMail(divTohideId, loanedBooks) {
             alert('Er is iets fouts gegaan');
         });
     }
+    document.getElementById(divTohideId).style.display = "none";
 }
 	
 // Close popup
