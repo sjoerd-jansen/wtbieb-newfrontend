@@ -78,9 +78,15 @@
 				<h1 id="bookTitle" class="book_title">Book Title</h1>
 				<h2 id="bookAuthor"></h2>
 				<p id="bookIsbn">ISBN</p>
+				<p id="bookRating">Rating</p>
 			
 				<p id="bookCopies" class="copies_available"></p>
 				<button id="addCopiesButton" onclick="ReserveBook()">Boek reserveren</button>
+				<p><button type="button" onclick='RateBook(1)'><img id="oneStar" src="../images/starNotSelected.png" alt="1 ster" width="50" height="50" onmouseover="StarHover(1)" onmouseleave="StarClear(1)"></button>
+					<button type="button" onclick='RateBook(2)'><img id="twoStar" src="../images/starNotSelected.png" alt="2 sterren" width="50" height="50"onmouseover="StarHover(2)" onmouseleave="StarClear(2)"></button>
+					<button type="button" onclick='RateBook(3)'><img id="threeStar" src="../images/starNotSelected.png" alt="3 sterren" width="50" height="50"onmouseover="StarHover(3)" onmouseleave="StarClear(3)"></button>
+					<button type="button" onclick='RateBook(4)'><img id="fourStar" src="../images/starNotSelected.png" alt="4 sterren" width="50" height="50"onmouseover="StarHover(4)" onmouseleave="StarClear(4)"></button>
+					<button type="button" onclick='RateBook(5)'><img id="fiveStar" src="../images/starNotSelected.png" alt="5 sterren" width="50" height="50"onmouseover="StarHover(5)" onmouseleave="StarClear(5)"></button></p>
 			</div>
 		</div>
 	</div>
