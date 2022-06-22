@@ -11,6 +11,7 @@ function FetchSingleBook()
 
 function SetBookInfo(book)
 {
+	let rating = (Math.round(book.bookRating * 100) / 100).toFixed(2);
 	document.getElementById("bookTitle").innerHTML = book.bookTitle;
     document.getElementById("bookAuthor").innerHTML = book.bookAuthor;
     document.getElementById("bookIsbn").innerHTML = book.bookIsbn;
@@ -18,7 +19,7 @@ function SetBookInfo(book)
 	document.getElementById("bookImg").src = book.bookCover;
 
 	if (book.bookRating > 0)
-		document.getElementById("bookRating").innerHTML = "Rating: " + book.bookRating + " sterren op basis van " + book.usersRated + " beoordeling(en)";
+		document.getElementById("bookRating").innerHTML = "Rating: " + rating + " sterren op basis van " + book.usersRated + " beoordeling(en)";
 	else
 		document.getElementById("bookRating").innerHTML = "Dit boek heeft nog geen beoordelingen";
 }
