@@ -552,3 +552,7 @@ function LogOff()
 	localStorage.clear();
 	window.location.href = '../html/loginPage.html';
 }
+
+function openBugPage() {
+    window.location = "../html/bugReport.html";
+}

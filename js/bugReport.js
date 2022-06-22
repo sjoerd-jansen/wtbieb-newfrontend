@@ -20,7 +20,10 @@ function sendBugReport() {
             body: JSON.stringify(bugReport)
         })
         .then(response => {
-            alert("Verzonden!");
+            return response.json();
+        })
+        .then(data => {
+            alert(data.response);
         })
         .catch(error => {
             alert('Er is iets fouts gegaan');
@@ -31,5 +34,15 @@ function sendBugReport() {
 
 
 function openPage(divId) {
+    window.location = "../html/userPage.html";
+}
+
+function openPage(divId) {
+    if (divId == "MijnOverzicht")
+        localStorage.setItem("currentTab", 0);
+    else if (divId == "Boekenlijst")
+        localStorage.setItem("currentTab", 1);
+    else
+        localStorage.setItem("currentTab", 2); 
     window.location = "../html/userPage.html";
 }
