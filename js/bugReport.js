@@ -23,7 +23,7 @@ function sendBugReport() {
             return response.json();
         })
         .then(data => {
-            alert(data);
+            alert(data.response);
         })
         .catch(error => {
             alert('Er is iets fouts gegaan');
