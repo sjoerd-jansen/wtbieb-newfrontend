@@ -1,3 +1,14 @@
+function OnPageOpen()
+{
+	//, this, 'grey'
+	let pageToOpen = localStorage.getItem("CurrentPage");
+
+	if (pageToOpen != null)
+	{
+		openPage(pageToOpen, this, 'grey');
+	}
+}
+
 function FetchCurrentUser()
 {
 	let id = localStorage.getItem("id");
@@ -17,6 +28,8 @@ function SetEmployeeInfo(user)
 }
 
 FetchCurrentUser();
+
+OnPageOpen();
 
 
 

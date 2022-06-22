@@ -36,47 +36,55 @@
 </head>
 
 <body>
+    <div id="screenmask" onclick="hideMenus()" style="position:fixed; background-color: grey; opacity: 0.5; width: 100%; height: 100%; top: 0px; right: 0px; display: none; z-index: 8;"></div>
   <!-- <p><span id="bookId"></span></p>
   <p><span id="bookTitle"></span></p>
   <p><span id="bookAuthor"></span></p>
   <p><span id="bookIsbn"></span></p>
   <p><span id="bookCopies"></span></p> -->
-  <div class="header">
+  	<div class="header">
 
-    <div class="subitem-header">
-      <button class="tablink-primary header-button" onclick="openPage('MijnOverzicht', this, 'grey')">
-        Overzicht
-    </button>
-    </div>
+		<div class="subitem-header">
+			<button class="tablink-primary header-button" onclick="OpenPage('MijnOverzicht')">
+			Overzicht
+			</button>
+		</div>
+		
+		<div class="subitem-header">
+			<button class="tablink header-button" onclick="OpenPage('Boekenlijst')">
+				Boekenlijst
+			</button>
+		</div>
+        
+		<div class="subitem-header">
+			<button class="tablink header-button" onclick="OpenPage('Profiel')">
+			Mijn profiel
+			</button>
+		</div>
     
-    <div class="subitem-header">
-      <button class="tablink header-button" onclick="openPage('Boekenlijst', this, 'grey')">
-        Boekenlijst
-    </button>
-    </div>
-    
-    <div class="button-container-header" style="float: right;">
-        <button type="button" class="logout-button" style="float: right;">
-            Uitloggen
-        </button>
-    </div>
-  </div>
+		<div class="button-container-header" style="float: right;">
+			<button type="button" class="logout-button" style="float: right;" onclick="LogOff()">
+				Uitloggen
+			</button>
+		</div>
+  	</div>
     <div class="container">
-      <div class="row">
-        <div class="col-sm">
-          <img class= "cover_img" src="../images/cover.jpg" alt="Geen foto beschikbaar"/>
-        </div>
-        <div class="col-sm">
-          
-          <h1 class="book_title">Book Title</h1>
-          <h2>Author</h2>
-          <p>ISBN</p>
-          
-          <p class="copies_available">Hoeveelheid exemplaren beschikbaar:12</p>
-          <button>Reserveer exemplaar</button>
-        </div>
-      </div>
-    </div>
+      	<div class="row">
+        	<div class="col">
+        		<img id="bookImg" class= "cover_img" src="../images/cover.jpg" alt="Geen foto beschikbaar" height="600">
+       		</div>
+        
+        	<div class="col">
+				<h1 id="bookTitle" class="book_title">Book Title</h1>
+				<h2 id="bookAuthor"></h2>
+				<p id="bookIsbn">ISBN</p>
+			
+				<p id="bookCopies" class="copies_available"></p>
+				<button id="addCopiesButton" onclick="ReserveBook()">Boek reserveren</button>
+			</div>
+		</div>
+	</div>
+
   <div class="footer">
             
     <div class="footer_img_div">
@@ -84,8 +92,46 @@
     </div>
 
 </div>
-  <script src="../js/defaultbookpage.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+	<script src="../js/defaultBookPage.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 
+    <style>
+        .form-popup {
+            top: 50%;
+            left: 50%;
+            display: none;
+            position: fixed;
+            background-color: white;
+            border-right: solid black 3px;
+            border-left: solid black 1px;
+            border-top: solid black 1px;
+            border-bottom: solid black 3px;
+            border-radius: 10px;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 300px;
+            z-index: 9;
+        }
+
+        .book-input {
+            display: block;
+        }
+
+		
+		.owned-books-div {
+			float:left;
+			/* background: red; */
+			width: 70%;
+			height: auto;
+		}
+
+		.copy-books-div {
+			float:right;
+			/* background: red; */
+			width: 30%;
+			height: auto;
+		}
+
+    </style>
 </html>
