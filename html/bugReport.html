@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="../css/styles.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bugreport</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
+    <title>Bugreport</title>
     <script src="../js/env.js"></script>
+
     <style>
         .bug-report-form {
             display: block;
@@ -19,6 +21,7 @@
             line-height: 50px;
         }
     </style>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
@@ -26,24 +29,29 @@
     <div class="header">
 
         <div class="subitem-header">
-          <button class="tablink-primary header-button" onclick="openPage('MijnOverzicht', this, 'grey')">
-            Overzicht
-        </button>
+            <button class="tablink header-button" onclick="openPage('MijnOverzicht', this, 'grey')">
+                Overzicht
+            </button>
         </div>
-        
+    
         <div class="subitem-header">
-          <button class="tablink header-button" onclick="openPage('Boekenlijst', this, 'grey')">
+            <button class="tablink header-button" onclick="openPage('Boekenlijst', this, 'grey')">
             Boekenlijst
-        </button>
+            </button>
         </div>
-        
+    
+        <div class="subitem-header">
+            <button class="tablink header-button" onclick="openPage('Profiel', this, 'grey')" style="font-family: 'century-gothic'">
+            Mijn profiel
+            </button>
+        </div>
+    
         <div class="button-container-header" style="float: right;">
-            <button type="button" onclick="LogOff()" class="logout-button" style="float: right;">
-                Uitloggen
+            <button type="button" class="logout-button" onclick="LogOff()" style="float: right;">
+            Uitloggen
             </button>
         </div>
     </div>
-
     <div class="bug-report-form">
     <form class="blob">
         <h1>Bug report</h1>
