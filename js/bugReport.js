@@ -20,7 +20,10 @@ function sendBugReport() {
             body: JSON.stringify(bugReport)
         })
         .then(response => {
-            alert("Verzonden!");
+            return response.json();
+        })
+        .then(data => {
+            alert(data);
         })
         .catch(error => {
             alert('Er is iets fouts gegaan');
