@@ -1,3 +1,14 @@
+function OnPageOpen()
+{
+	//, this, 'grey'
+	let pageToOpen = localStorage.getItem("CurrentPage");
+
+	if (pageToOpen != null)
+	{
+		openPage(pageToOpen, this, 'grey');
+	}
+}
+
 function resetTablinksClass(standardClassName, secondaryClassName)
 {
     var tablinks = document.getElementsByClassName(standardClassName);
@@ -44,6 +55,8 @@ function initialisePage()
 }
 
 initialisePage();
+
+OnPageOpen();
 
 /*
 		THIS PART OF THE SCRIPT IS TO FETCH ALL
@@ -189,17 +202,9 @@ function TagArrayToString(tagArray)
 
 function OpenDefaultBookPage(book)
 {
-    SaveBook(book);
-    window.location = "../html/defaultBookPage.html"
-}
-
-
-function SaveBook(book)
-{
-    console.log("Current book " + book);
     book = JSON.stringify(book);
-    console.log("Current book " + book);
     localStorage.setItem("currentBook", book);
+    window.location = "../html/defaultBookPage.html"
 }
 
 FetchUserBooks();
