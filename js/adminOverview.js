@@ -477,3 +477,20 @@ function LogOff()
 	localStorage.clear();
 	window.location.href = '../html/loginPage.html';
 }
+
+function OpenCurrentTab() {
+    let tab = localStorage.getItem("currentTab");
+	var standardClassName = "header-button";
+    if (tab == 0) {
+        document.getElementById("OverzichtTabButton").click();
+        
+    }
+    else if (tab == 1) {
+         document.getElementById("BoekenlijstTabButton").click();
+    }
+    else {
+         document.getElementById("MedewerkersTabButton").click();
+    }
+}
+
+OpenCurrentTab();
