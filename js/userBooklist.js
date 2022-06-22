@@ -103,10 +103,10 @@ function FillTableBooks(tablePage, input)
 		{
         	let currentBook = JSON.stringify(book)
        		bookTableHtml += `<tr>
-           	    <td>${book.bookTitle}</td>
-                <td>${book.bookAuthor}</td>
-                <td>${book.bookIsbn}</td>			
-                <td>${TagArrayToString(book.bookTags)}</td>`;
+           	    <td onclick='OpenDefaultBookPage(${currentBook})'>${book.bookTitle}</td>
+                <td onclick='OpenDefaultBookPage(${currentBook})'>${book.bookAuthor}</td>
+                <td onclick='OpenDefaultBookPage(${currentBook})'>${book.bookIsbn}</td>			
+                <td onclick='OpenDefaultBookPage(${currentBook})'>${TagArrayToString(book.bookTags)}</td>`;
 				if (NotReservedOrOwned(book.bookTitle))
 					bookTableHtml += `<td><button type="button" onclick='ReserveBook(${book.bookId})'>Reserveer</button></td>`;
 				else
@@ -185,6 +185,21 @@ function TagArrayToString(tagArray)
 	tags = tags.slice(0,-1);
 
 	return tags
+}
+
+function OpenDefaultBookPage(book)
+{
+    SaveBook(book);
+    window.location = "../html/defaultBookPage.html"
+}
+
+
+function SaveBook(book)
+{
+    console.log("Current book " + book);
+    book = JSON.stringify(book);
+    console.log("Current book " + book);
+    localStorage.setItem("currentBook", book);
 }
 
 FetchUserBooks();
